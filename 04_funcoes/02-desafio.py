@@ -1,10 +1,8 @@
 # Nome: Fabricio Candido Ferreira
 # Disciplina: Programação de Sistemas
-# Curso: Técnico em Informática - IFPR
 # Data: 09/03/2026
 # Descrição:
-# Programa simples para calcular a média de um aluno
-# e verificar a situação (Aprovado, Recuperação ou Reprovado).
+# Programa  para calcular a média de um aluno e verificar a situação (Aprovado, Recuperação ou Reprovado).
 
 
 # função que calcula a média das duas notas
@@ -30,7 +28,6 @@ def verificar_situacao(media):
 print("<<<< Sistema de Notas >>>>")
 print()
 
-# entrada de dados
 nome = input("Digite o nome do aluno: ")
 
 nota1 = float(input("Digite a primeira nota: "))
