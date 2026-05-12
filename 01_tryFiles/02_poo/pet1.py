@@ -3,7 +3,7 @@
 # ARQUIVO    : pet.py
 # Disciplina : Programação de Sistemas (2026-2)
 # Aula       : Aula 20 - Por que POO?
-# Autor      : [SEU NOME]
+# Autor      : fabricio
 # Conceitos  : Classe, objeto, atributos, métodos, encapsulamento
 # Atividade  : Classe Pet completa
 =======================================================================
