@@ -1,0 +1,30 @@
+Link do repositório: ________
+
+Conceito pretendido: C+ (quase B)
+
+Por que este conceito:
+
+Critério 1 (classe e encapsulamento): Aluno.java, linha 14 — A classe `Aluno` possui os atributos da ficha e usa `private` para proteger os dados, acessados por métodos públicos.
+
+Critério 1 (identidade: título do menu e mensagens):** Main.java, linha 14 — O programa apresenta o título **"SECRETARIA do Fabricio"** e mensagens para orientar o usuário.
+
+Critério 2 (coleção e menu): Main.java, linhas 8 e 11–23 — Foi utilizada uma `ArrayList` para armazenar os alunos e um menu com várias opções para utilizar o sistema.
+
+Critério 3 (busca, CRUD): Main.java, linhas 25–80 — O sistema permite cadastrar, listar, buscar, atualizar e excluir alunos, realizando as principais operações de CRUD.
+
+Critério 3 (atributo extra na ficha):** Aluno.java, linha 19 — Foi acrescentado o atributo `time`, usado para guardar o time do coração do aluno.
+
+Critério 4 (toString): Aluno.java, linhas 64–66 — O método `toString()` organiza as informações da ficha para serem exibidas quando o aluno é impresso.
+
+Critério 5 (autoavaliação): Fiz as explicações abaixo com minhas próprias palavras, contando como desenvolvi o projeto e as dificuldades que tive.
+
+Critério 4 (relatório e melhoria): Main.java, linhas 82–98 — O relatório mostra o total de fichas e conta quantos alunos pertencem a determinado curso. Como melhoria, poderia adicionar mais informações e filtros ao relatório.
+
+Explicação 1 (rota: cadastro até a busca / nível C):
+A rota começa no menu principal, onde escolho a opção de cadastrar aluno. O programa pede nome, matrícula, curso e time do coração e depois guarda a ficha na `ArrayList`. Para fazer a busca, escolho a opção de buscar e informo a matrícula. O programa procura na lista e mostra a ficha encontrada.
+
+Explicação 2:
+Eu considero que mereço um **C+ e que fiquei quase no B**, porque consegui fazer as principais funções do sistema, como cadastro, listagem, busca, atualização, exclusão e relatório. Também tive dificuldades durante o desenvolvimento e precisei corrigir vários erros. Meu repositório deu um problema e precisei começar o projeto do zero, mas consegui reconstruir e fazer o sistema funcionar.
+
+Usei IA em:
+Usei IA para me auxiliar principalmente quando apareciam erros de sintaxe. Eu pedia para ela explicar tintim por tintim o que estava errado para eu conseguir entender e corrigir. Também usei auxílio na parte de cadastro e para adicionar o time do coração. Em algumas partes, usei exemplos de código para conseguir continuar o projeto, principalmente porque meu repositório deu problema e precisei começar tudo do zero. Usei a IA como apoio para entender os erros e aprender a resolver os problemas do código.

@@ -76,4 +76,10 @@ public void setCurso(String curso) {
 public void setTime(String time){
     this.time = time;
 }
+//toString: Como a ficha vai aparecer quando alguem manda emprimila
+// Sem ele:, System.out.println(aluno) mostra Aluno@7ad041f3
+// o @Override avisa o compilador: estou trocando um metodo que toda classe ja tem por uma versão minha 
+public String toString(){
+    return matricula + "|" + nome + "|"+ curso +"|" + time;
+}
 }
