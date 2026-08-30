@@ -24,19 +24,21 @@ Atributos os campos impressos na ficha
     private String nome;
     private String matricula;
     private String curso;
+    private String time;
     
 
 // CONSTRUTOR: roda no momento do "new" e preenche a ficha.
 // E o __init__ de voces, em Java. Tem o mesmo nome da classe e nao
 // declara tipo de retorno. Os valores chegam de fora, entre parenteses.
 
-public Aluno(String nome, String matricula, String curso) {
+public Aluno(String nome, String matricula, String curso , String time) {
     // "this" = ESTA ficha aqui (o self do Java).
     // this.nome e o atributo da ficha; nome, sozinho, e o parametro
     // que acabou de chegar. Sem o this, os dois seriam o parametro.
     this.nome = nome;
     this.matricula = matricula;
     this.curso = curso;
+    this.time = time;
 }
 
 // GETTERS: as janelas de leitura da ficha.
@@ -54,6 +56,10 @@ public String getCurso() {
     return curso;
 }
 
+public String getTime(){
+    return time;
+}
+
 // SETTERS: a unica porta de entrada para mudar um dado da ficha.
 // Hoje eles so trocam o valor, mas e aqui que um dia entra a regra
 // ("nome vazio nao vale", "curso tem que existir").
@@ -65,5 +71,9 @@ public void setNome(String nome) {
 
 public void setCurso(String curso) {
     this.curso = curso;
+}
+
+public void setTime(String time){
+    this.time = time;
 }
 }
