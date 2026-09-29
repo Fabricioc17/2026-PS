@@ -7,12 +7,11 @@
  */
 public class Leitor extends Usuario {
 
-    // So o que a caixa Leitor acrescenta. Nome e matricula ja vem de Usuario.
     private int limiteEmprestimos;
-    private int livrosEmMaos;  // nao estava na caixa: o codigo pediu
+    private int livrosEmMaos;
 
     public Leitor(String nome, String matricula, int limiteEmprestimos) {
-        super(nome, matricula); // Necessário para a herança compilar corretamente
+        super(nome, matricula);
         this.limiteEmprestimos = limiteEmprestimos;
         this.livrosEmMaos = 0;
     }
@@ -25,12 +24,10 @@ public class Leitor extends Usuario {
         return livrosEmMaos;
     }
 
-    // OPERACAO DA CAIXA: podePegarEmprestado().
     public boolean podePegarEmprestado() {
         return livrosEmMaos < limiteEmprestimos;
     }
 
-    // Os dois metodos que o emprestimo vai usar na Aula 38.
     public void pegouLivro() {
         this.livrosEmMaos = this.livrosEmMaos + 1;
     }
@@ -39,6 +36,7 @@ public class Leitor extends Usuario {
         this.livrosEmMaos = this.livrosEmMaos - 1;
     }
 
+    @Override
     public String toString() {
         return "Leitor " + getNome() + " (" + getMatricula() + ") - "
                 + livrosEmMaos + " de " + limiteEmprestimos + " livros";
