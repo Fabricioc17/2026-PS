@@ -99,3 +99,28 @@ java TelaBiblioteca
 - A classe `TelaBiblioteca` abre a interface grafica.
 - Os testes dependem do funcionamento das classes `Biblioteca`, `Livro`, `Leitor` e `Emprestimo`.
 - A tabela de requisitos deve ser atualizada quando novas funcionalidades forem implementadas e testadas.
+
+## Persistência de Dados
+
+Este projeto utiliza o banco de dados **MariaDB / MySQL** para garantir que as informações dos livros permaneçam armazenadas permanentemente.
+
+- **Classe Conexao**: Responsável por estabelecer a comunicação direta com o banco de dados via JDBC utilizando a biblioteca de driver apropriada.
+- **Classe LivroDAO**: Centraliza a responsabilidade de executar operações no banco de dados (Padrão Data Access Object).
+- **Métodos Implementados**:
+  - `adicionarLivro()`: Insere um novo registro de livro na tabela utilizando comandos preparados (`PreparedStatement`).
+  - `atualizarLivro()`: Altera os dados de um livro existente filtrando pelo seu identificador (`id`).
+  - `excluirLivro()`: Remove permanentemente um registro do banco de dados com base no `id`.
+
+### Configuração e Execução
+A aplicação depende de variáveis de ambiente para preservar as credenciais de acesso ao banco de dados com segurança. Configure-as antes de executar:
+
+```bash
+export DB_USER="seu_usuario"
+export DB_PASSWORD="sua_senha_secreta"
+```
+
+Para compilar e rodar os testes de persistência:
+```bash
+javac -cp ".:lib/*" Conexao.java LivroDAO.java TesteLivroDAO.java
+java -cp ".:lib/*" TesteLivroDAO
+```
