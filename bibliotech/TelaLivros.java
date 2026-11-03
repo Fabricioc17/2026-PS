@@ -17,7 +17,7 @@ public class TelaLivros extends JFrame {
     public TelaLivros() {
 
         setTitle("BiblioTech - Consulta de Livros");
-        setSize(850, 450);
+        setSize(900, 450); // Aumentado um pouco para caber o novo botão
         setLocationRelativeTo(null);
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -42,19 +42,35 @@ public class TelaLivros extends JFrame {
         JButton atualizar = new JButton("Atualizar listagem");
         JButton buscar = new JButton("Buscar por ID");
         JButton mostrarTodos = new JButton("Mostrar todos");
+        
+        // DESAFIO 3: Criando o botão Limpar
+        JButton limpar = new JButton("Limpar");
 
         controles.add(new JLabel("ID do livro:"));
         controles.add(campoId);
         controles.add(buscar);
+        controles.add(limpar); // Adicionando o botão Limpar na tela
         controles.add(atualizar);
         controles.add(mostrarTodos);
 
         add(controles, BorderLayout.NORTH);
         add(status, BorderLayout.SOUTH);
 
+        // Ouvintes de eventos dos botões
         atualizar.addActionListener(e -> carregarLivros());
         mostrarTodos.addActionListener(e -> carregarLivros());
         buscar.addActionListener(e -> buscarLivro());
+        
+        // DESAFIO 3: Configuração do botão Limpar
+        limpar.addActionListener(e -> {
+            campoId.setText("");
+            campoId.requestFocus();
+        });
+
+        // DESAFIO 2: Configuração para buscar pressionando ENTER no campo de texto
+        campoId.addActionListener(e -> {
+            buscarLivro();
+        });
 
         carregarLivros();
     }
@@ -67,6 +83,7 @@ public class TelaLivros extends JFrame {
             adicionarLinha(livro);
         }
 
+        // DESAFIO 1: A interface já apresenta a contagem de registros aqui:
         status.setText("Livros apresentados: " + livros.size());
     }
 
