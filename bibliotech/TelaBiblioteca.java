@@ -1,4 +1,3 @@
-
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -44,14 +43,23 @@ public class TelaBiblioteca extends JFrame {
         JButton botaoEmprestar = new JButton("Emprestar");
         JButton botaoDevolver = new JButton("Devolver");
         JButton botaoAtualizar = new JButton("Atualizar acervo");
+        
+        // ETAPA 5: Adicionando o botão de consulta à interface principal
+        JButton botaoConsultar = new JButton("Consultar livros");
 
         botaoEmprestar.addActionListener(e -> emprestar());
         botaoDevolver.addActionListener(e -> devolver());
         botaoAtualizar.addActionListener(e -> atualizarAcervo());
+        
+        // Configurando a ação do botão para abrir a TelaLivros
+        botaoConsultar.addActionListener(e -> {
+            new TelaLivros().setVisible(true);
+        });
 
         botoes.add(botaoEmprestar);
         botoes.add(botaoDevolver);
         botoes.add(botaoAtualizar);
+        botoes.add(botaoConsultar); // Insere o botão no painel visual
         add(botoes, BorderLayout.SOUTH);
 
         atualizarAcervo();
