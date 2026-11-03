@@ -6,24 +6,23 @@ import java.util.List;
 public class TelaLivros extends JFrame {
 
     private final LivroDAO dao = new LivroDAO();
-
     private final DefaultTableModel modelo;
     private final JTable tabela;
 
+    // Campos de Texto
     private final JTextField campoId = new JTextField(8);
+    private final JTextField campoTitulo = new JTextField(18); // PARTE 18
 
     private final JLabel status = new JLabel("Pronto.");
 
     public TelaLivros() {
-
         setTitle("BiblioTech - Consulta de Livros");
-        setSize(900, 450); // Aumentado um pouco para caber o novo botão
+        setSize(850, 500);
         setLocationRelativeTo(null);
-
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
         setLayout(new BorderLayout(8, 8));
 
+        // Configuração da Tabela
         modelo = new DefaultTableModel(
             new Object[]{"ID", "Título", "Autor", "Ano"}, 0
         ) {
@@ -32,45 +31,55 @@ public class TelaLivros extends JFrame {
                 return false;
             }
         };
-
         tabela = new JTable(modelo);
-
         add(new JScrollPane(tabela), BorderLayout.CENTER);
 
-        JPanel controles = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        // --- PAINEL DE CONTROLES ORGANIZADO EM DUAS LINHAS (GRID) ---
+        JPanel containerControles = new JPanel(new GridLayout(2, 1, 4, 4));
 
-        JButton atualizar = new JButton("Atualizar listagem");
-        JButton buscar = new JButton("Buscar por ID");
-        JButton mostrarTodos = new JButton("Mostrar todos");
+        // Linha 1: Busca por ID
+        JPanel linhaId = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JButton botaoBuscarId = new JButton("Buscar por ID");
+        JButton botaoLimparId = new JButton("Limpar ID");
+        JButton botaoMostrarTodos = new JButton("Mostrar todos");
         
-        // DESAFIO 3: Criando o botão Limpar
-        JButton limpar = new JButton("Limpar");
+        linhaId.add(new JLabel("ID do livro:"));
+        linhaId.add(campoId);
+        linhaId.add(botaoBuscarId);
+        linhaId.add(botaoLimparId);
+        linhaId.add(botaoMostrarTodos);
 
-        controles.add(new JLabel("ID do livro:"));
-        controles.add(campoId);
-        controles.add(buscar);
-        controles.add(limpar); // Adicionando o botão Limpar na tela
-        controles.add(atualizar);
-        controles.add(mostrarTodos);
+        // Linha 2: Busca por Título (PARTE 18)
+        JPanel linhaTitulo = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JButton botaoBuscarTitulo = new JButton("Buscar por título");
+        JButton botaoLimparTitulo = new JButton("Limpar Título");
+        JButton botaoAtualizar = new JButton("Atualizar listagem");
 
-        add(controles, BorderLayout.NORTH);
+        linhaTitulo.add(new JLabel("Título:"));
+        linhaTitulo.add(campoTitulo);
+        linhaTitulo.add(botaoBuscarTitulo);
+        linhaTitulo.add(botaoLimparTitulo);
+        linhaTitulo.add(botaoAtualizar);
+
+        // Adiciona as duas linhas no container do topo
+        containerControles.add(linhaId);
+        containerControles.add(linhaTitulo);
+        add(containerControles, BorderLayout.NORTH);
         add(status, BorderLayout.SOUTH);
 
-        // Ouvintes de eventos dos botões
-        atualizar.addActionListener(e -> carregarLivros());
-        mostrarTodos.addActionListener(e -> carregarLivros());
-        buscar.addActionListener(e -> buscarLivro());
-        
-        // DESAFIO 3: Configuração do botão Limpar
-        limpar.addActionListener(e -> {
-            campoId.setText("");
-            campoId.requestFocus();
-        });
+        // --- EVENTOS DE CLIQUE ---
+        botaoBuscarId.addActionListener(e -> buscarLivro());
+        botaoMostrarTodos.addActionListener(e -> carregarLivros());
+        botaoAtualizar.addActionListener(e -> carregarLivros());
+        botaoBuscarTitulo.addActionListener(e -> buscarPorTitulo()); // PARTE 18
 
-        // DESAFIO 2: Configuração para buscar pressionando ENTER no campo de texto
-        campoId.addActionListener(e -> {
-            buscarLivro();
-        });
+        // Eventos de Limpar (Desafios)
+        botaoLimparId.addActionListener(e -> campoId.setText(""));
+        botaoLimparTitulo.addActionListener(e -> campoTitulo.setText(""));
+
+        // Eventos de Apertar Enter nos campos (Desafios)
+        campoId.addActionListener(e -> buscarLivro());
+        campoTitulo.addActionListener(e -> buscarPorTitulo()); // PARTE 18
 
         carregarLivros();
     }
@@ -78,12 +87,9 @@ public class TelaLivros extends JFrame {
     private void carregarLivros() {
         modelo.setRowCount(0);
         List<Livro> livros = dao.listarLivros();
-
         for (Livro livro : livros) {
             adicionarLinha(livro);
         }
-
-        // DESAFIO 1: A interface já apresenta a contagem de registros aqui:
         status.setText("Livros apresentados: " + livros.size());
     }
 
@@ -99,19 +105,11 @@ public class TelaLivros extends JFrame {
     private void buscarLivro() {
         String texto = campoId.getText().trim();
         int id;
-
         try {
             id = Integer.parseInt(texto);
-            if (id <= 0) {
-                throw new NumberFormatException();
-            }
+            if (id <= 0) throw new NumberFormatException();
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(
-                this,
-                "Informe um ID inteiro positivo.",
-                "Entrada inválida",
-                JOptionPane.WARNING_MESSAGE
-            );
+            JOptionPane.showMessageDialog(this, "Informe um ID inteiro positivo.", "Entrada inválida", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -124,6 +122,29 @@ public class TelaLivros extends JFrame {
         } else {
             adicionarLinha(livro);
             status.setText("Livro encontrado: " + livro.getTitulo());
+        }
+    }
+
+    // PARTE 18: Método de busca por título
+    private void buscarPorTitulo() {
+        String titulo = campoTitulo.getText().trim();
+
+        if (titulo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Informe o título do livro.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        List<Livro> livros = dao.buscarLivrosPorTitulo(titulo);
+        modelo.setRowCount(0);
+
+        for (Livro livro : livros) {
+            adicionarLinha(livro);
+        }
+
+        status.setText("Livros encontrados: " + livros.size());
+
+        if (livros.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum livro encontrado.");
         }
     }
 

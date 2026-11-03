@@ -7,59 +7,72 @@ import java.util.List;
 
 public class LivroDAO {
 
-    // FASE 4: listarLivros retornando objetos Livro
-    public List<Livro> listarLivros() {
+    // PARTE 18: Buscar livros por parte do título (LIKE)
+    public List<Livro> buscarLivrosPorTitulo(String titulo) {
         List<Livro> livros = new ArrayList<>();
-        String sql = "SELECT id, titulo, autor, ano FROM livros ORDER BY ano DESC";
-
-        try (Connection conexao = Conexao.conectar();
-             PreparedStatement comando = conexao.prepareStatement(sql);
-             ResultSet resultado = comando.executeQuery()) {
-
-            while (resultado.next()) {
-                int id = resultado.getInt("id");
-                String titulo = resultado.getString("titulo");
-                String autor = resultado.getString("autor");
-                int ano = resultado.getInt("ano");
-
-                // Transforma a linha do banco em Objeto Java
-                Livro livro = new Livro(id, titulo, autor, ano);
-                livros.add(livro);
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Erro ao listar livros: " + e.getMessage());
-        }
-
-        return livros;
-    }
-
-    // FASE 5: buscarLivroPorId retornando um objeto Livro
-    public Livro buscarLivroPorId(int id) {
-        String sql = "SELECT id, titulo, autor, ano FROM livros WHERE id = ?";
+        String sql = "SELECT id, titulo, autor, ano FROM livros WHERE titulo LIKE ? ORDER BY titulo";
 
         try (Connection conexao = Conexao.conectar();
              PreparedStatement comando = conexao.prepareStatement(sql)) {
 
-            comando.setInt(1, id);
+            comando.setString(1, "%" + titulo + "%");
 
             try (ResultSet resultado = comando.executeQuery()) {
-                if (resultado.next()) {
-                    int codigo = resultado.getInt("id");
-                    String titulo = resultado.getString("titulo");
-                    String autor = resultado.getString("autor");
-                    int ano = resultado.getInt("ano");
-
-                    // Retorna o objeto criado com os dados do banco
-                    return new Livro(codigo, titulo, autor, ano);
+                while (resultado.next()) {
+                    Livro livro = new Livro(
+                        resultado.getInt("id"),
+                        resultado.getString("titulo"),
+                        resultado.getString("autor"),
+                        resultado.getInt("ano")
+                    );
+                    livros.add(livro);
                 }
             }
-
         } catch (SQLException e) {
-            System.out.println("Erro ao buscar livro: " + e.getMessage());
+            System.out.println("Erro ao buscar livros por titulo: " + e.getMessage());
         }
+        return livros;
+    }
 
+    public Livro buscarLivroPorId(int id) {
+        String sql = "SELECT id, titulo, autor, ano FROM livros WHERE id = ?";
+        try (Connection conexao = Conexao.conectar();
+             PreparedStatement comando = conexao.prepareStatement(sql)) {
+            comando.setInt(1, id);
+            try (ResultSet resultado = comando.executeQuery()) {
+                if (resultado.next()) {
+                    return new Livro(
+                        resultado.getInt("id"),
+                        resultado.getString("titulo"),
+                        resultado.getString("autor"),
+                        resultado.getInt("ano")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar livro por ID: " + e.getMessage());
+        }
         return null;
+    }
+
+    public List<Livro> listarLivros() {
+        List<Livro> livros = new ArrayList<>();
+        String sql = "SELECT id, titulo, autor, ano FROM livros ORDER BY ano DESC";
+        try (Connection conexao = Conexao.conectar();
+             PreparedStatement comando = conexao.prepareStatement(sql);
+             ResultSet resultado = comando.executeQuery()) {
+            while (resultado.next()) {
+                livros.add(new Livro(
+                    resultado.getInt("id"),
+                    resultado.getString("titulo"),
+                    resultado.getString("autor"),
+                    resultado.getInt("ano")
+                ));
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao listar livros: " + e.getMessage());
+        }
+        return livros;
     }
 
     public boolean adicionarLivro(String titulo, String autor, int ano) {
