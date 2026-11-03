@@ -17,11 +17,16 @@ public class TesteBuscarLivro {
                 break;
             }
 
-            String livro = dao.buscarLivroPorId(id);
+            Livro livro = dao.buscarLivroPorId(id);
 
             if (livro != null) {
                 System.out.println("Livro encontrado:");
-                System.out.println(livro);
+                System.out.println(
+                    livro.getId() + " - " +
+                    livro.getTitulo() + " - " +
+                    livro.getAutor() + " (" +
+                    livro.getAno() + ")"
+                );
             } else {
                 System.out.println("Livro não encontrado.");
             }

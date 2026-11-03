@@ -7,7 +7,35 @@ import java.util.List;
 
 public class LivroDAO {
 
-    public String buscarLivroPorId(int id) {
+    // FASE 4: listarLivros retornando objetos Livro
+    public List<Livro> listarLivros() {
+        List<Livro> livros = new ArrayList<>();
+        String sql = "SELECT id, titulo, autor, ano FROM livros ORDER BY ano DESC";
+
+        try (Connection conexao = Conexao.conectar();
+             PreparedStatement comando = conexao.prepareStatement(sql);
+             ResultSet resultado = comando.executeQuery()) {
+
+            while (resultado.next()) {
+                int id = resultado.getInt("id");
+                String titulo = resultado.getString("titulo");
+                String autor = resultado.getString("autor");
+                int ano = resultado.getInt("ano");
+
+                // Transforma a linha do banco em Objeto Java
+                Livro livro = new Livro(id, titulo, autor, ano);
+                livros.add(livro);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao listar livros: " + e.getMessage());
+        }
+
+        return livros;
+    }
+
+    // FASE 5: buscarLivroPorId retornando um objeto Livro
+    public Livro buscarLivroPorId(int id) {
         String sql = "SELECT id, titulo, autor, ano FROM livros WHERE id = ?";
 
         try (Connection conexao = Conexao.conectar();
@@ -22,7 +50,8 @@ public class LivroDAO {
                     String autor = resultado.getString("autor");
                     int ano = resultado.getInt("ano");
 
-                    return codigo + " - " + titulo + " - " + autor + " (" + ano + ")";
+                    // Retorna o objeto criado com os dados do banco
+                    return new Livro(codigo, titulo, autor, ano);
                 }
             }
 
@@ -31,31 +60,6 @@ public class LivroDAO {
         }
 
         return null;
-    }
-
-    public List<String> listarLivros() {
-        List<String> livros = new ArrayList<>();
-        String sql = "SELECT id, titulo, autor, ano FROM livros ORDER BY ano DESC";
-
-        try (Connection conexao = Conexao.conectar();
-             PreparedStatement comando = conexao.prepareStatement(sql);
-             ResultSet resultado = comando.executeQuery()) {
-
-            while (resultado.next()) {
-                int id = resultado.getInt("id");
-                String titulo = resultado.getString("titulo");
-                String autor = resultado.getString("autor");
-                int ano = resultado.getInt("ano");
-
-                String livro = id + " - " + titulo + " - " + autor + " (" + ano + ")";
-                livros.add(livro);
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Erro ao listar livros: " + e.getMessage());
-        }
-
-        return livros;
     }
 
     public boolean adicionarLivro(String titulo, String autor, int ano) {

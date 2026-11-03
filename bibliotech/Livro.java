@@ -3,51 +3,75 @@ Disciplina: 2026-PS
 Projeto: bibliotech
 Arquivo: Livro.java
 Autor: Fabricio Candido
-Descrição: A caixa "Livro" do diagrama de classes, em java (aula37)
-
+Descrição: A caixa "Livro" do diagrama de classes, em java (aula37 + atualizacao aula43)
 */
 
-public class Livro{
-// Atributos: a faixa do meio da caixa, por uma linha, todos private
+public class Livro {
+    // Atributos originais
     private String titulo;
     private String autor;
     private int ano;
-    private boolean disponivel; // não esta na caixa o codigo pediu
+    private boolean disponivel;
+    
+    // FASE 2: Novo atributo para armazenar o ID do MariaDB
+    private int id;
 
-// Contrutor preenche a ficha do livro no momento do new
-public Livro(String titulo, String autor, int ano){
-    this.titulo = titulo;
-    this.autor = autor;
-    this.ano = ano;
-    this.disponivel = true;
-}
-// GETTERS: as janelas de leitura.
-public String getTitulo(){
-    return titulo;
-}
-public String getAutor(){
-    return autor;
-}
-public int getAno(){
-    return ano;
-}
+    // Construtor original (sem ID) - Usado nas aulas passadas
+    public Livro(String titulo, String autor, int ano) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.ano = ano;
+        this.disponivel = true;
+    }
 
-// Opperação da caixa: estaDisponivel(), a faixa de baixo do diagrama
-public boolean estaDisponivel(){
-    return disponivel;
-}
+    // FASE 3: Novo Construtor para o MariaDB (com ID)
+    public Livro(int id, String titulo, String autor, int ano) {
+        this.id = id;
+        this.titulo = titulo;
+        this.autor = autor;
+        this.ano = ano;
+        this.disponivel = true; // Por padrão, o livro inicia disponível
+    }
 
-// Os doi metodos que o emprestimo vai uar na auka 38.
-public void emprestar(){
-    this.disponivel = false;
-}
-public void devolver(){
-    this.disponivel = true;
-}
+    // FASE 2: Métodos de acesso para o ID do banco
+    public int getId() {
+        return id;
+    }
 
-//toString: como a ficha se apresenta aula34
-public String toString(){
-    String situacao = disponivel? "disponivel" : "emprestado";
-    return titulo + " (" + autor + "," + ano +") - " + situacao;
-}
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    // GETTERS originais: as janelas de leitura
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    // Operação da caixa: estaDisponivel()
+    public boolean estaDisponivel() {
+        return disponivel;
+    }
+
+    // Métodos de empréstimo e devolução originais
+    public void emprestar() {
+        this.disponivel = false;
+    }
+
+    public void devolver() {
+        this.disponivel = true;
+    }
+
+    // toString original
+    public String toString() {
+        String situacao = disponivel ? "disponivel" : "emprestado";
+        return titulo + " (" + autor + "," + ano + ") - " + situacao;
+    }
 }
