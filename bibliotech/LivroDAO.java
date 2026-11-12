@@ -7,10 +7,9 @@ import java.util.List;
 
 public class LivroDAO {
 
-    // PARTE 18: Buscar livros por parte do título (LIKE)
     public List<Livro> buscarLivrosPorTitulo(String titulo) {
         List<Livro> livros = new ArrayList<>();
-        String sql = "SELECT id, titulo, autor, ano FROM livros WHERE titulo LIKE ? ORDER BY titulo";
+        String sql = "SELECT id, titulo, autor, ano, capa FROM livros WHERE titulo LIKE ? ORDER BY titulo";
 
         try (Connection conexao = Conexao.conectar();
              PreparedStatement comando = conexao.prepareStatement(sql)) {
@@ -25,6 +24,7 @@ public class LivroDAO {
                         resultado.getString("autor"),
                         resultado.getInt("ano")
                     );
+                    livro.setCapa(resultado.getString("capa"));
                     livros.add(livro);
                 }
             }
@@ -35,18 +35,20 @@ public class LivroDAO {
     }
 
     public Livro buscarLivroPorId(int id) {
-        String sql = "SELECT id, titulo, autor, ano FROM livros WHERE id = ?";
+        String sql = "SELECT id, titulo, autor, ano, capa FROM livros WHERE id = ?";
         try (Connection conexao = Conexao.conectar();
              PreparedStatement comando = conexao.prepareStatement(sql)) {
             comando.setInt(1, id);
             try (ResultSet resultado = comando.executeQuery()) {
                 if (resultado.next()) {
-                    return new Livro(
+                    Livro livro = new Livro(
                         resultado.getInt("id"),
                         resultado.getString("titulo"),
                         resultado.getString("autor"),
                         resultado.getInt("ano")
                     );
+                    livro.setCapa(resultado.getString("capa"));
+                    return livro;
                 }
             }
         } catch (SQLException e) {
@@ -57,17 +59,19 @@ public class LivroDAO {
 
     public List<Livro> listarLivros() {
         List<Livro> livros = new ArrayList<>();
-        String sql = "SELECT id, titulo, autor, ano FROM livros ORDER BY ano DESC";
+        String sql = "SELECT id, titulo, autor, ano, capa FROM livros ORDER BY ano DESC";
         try (Connection conexao = Conexao.conectar();
              PreparedStatement comando = conexao.prepareStatement(sql);
              ResultSet resultado = comando.executeQuery()) {
             while (resultado.next()) {
-                livros.add(new Livro(
+                Livro livro = new Livro(
                     resultado.getInt("id"),
                     resultado.getString("titulo"),
                     resultado.getString("autor"),
                     resultado.getInt("ano")
-                ));
+                );
+                livro.setCapa(resultado.getString("capa"));
+                livros.add(livro);
             }
         } catch (SQLException e) {
             System.out.println("Erro ao listar livros: " + e.getMessage());
@@ -112,6 +116,24 @@ public class LivroDAO {
             return comando.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println("Erro ao excluir: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean atualizarCapa(int id, String caminho) {
+        String sql = "UPDATE livros SET capa = ? WHERE id = ?";
+
+        try (
+            Connection conexao = Conexao.conectar();
+            PreparedStatement comando = conexao.prepareStatement(sql)
+        ) {
+            comando.setString(1, caminho);
+            comando.setInt(2, id);
+
+            return comando.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar capa: " + e.getMessage());
             return false;
         }
     }

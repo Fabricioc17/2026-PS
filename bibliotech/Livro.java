@@ -15,6 +15,7 @@ public class Livro {
     
     // FASE 2: Novo atributo para armazenar o ID do MariaDB
     private int id;
+    private String capa;
 
     // Construtor original (sem ID) - Usado nas aulas passadas
     public Livro(String titulo, String autor, int ano) {
@@ -40,6 +41,14 @@ public class Livro {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCapa() {
+        return capa;
+    }
+
+    public void setCapa(String capa) {
+        this.capa = capa;
     }
 
     // GETTERS originais: as janelas de leitura
