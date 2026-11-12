@@ -1,0 +1,56 @@
+[1mdiff --git a/.vscode/settings.json b/.vscode/settings.json[m
+[1mdeleted file mode 100644[m
+[1mindex 7176c96..0000000[m
+[1m--- a/.vscode/settings.json[m
+[1m+++ /dev/null[m
+[36m@@ -1,9 +0,0 @@[m
+[31m-{[m
+[31m-    "editor.inlineSuggest.suppressSuggestions": false,[m
+[31m-    "editor.quickSuggestions": {[m
+[31m-        [m
+[31m-        "other": "offWhenInlineCompletions",[m
+[31m-        "comments": "off",[m
+[31m-        "strings": "off"[m
+[31m-    }[m
+[31m-}[m
+\ No newline at end of file[m
+[1mdiff --git a/bibliotech/Biblioteca.java b/bibliotech/Biblioteca.java[m
+[1mindex ef22fc2..792de6f 100644[m
+[1m--- a/bibliotech/Biblioteca.java[m
+[1m+++ b/bibliotech/Biblioteca.java[m
+[36m@@ -83,4 +83,18 @@[m [mpublic class Biblioteca {[m
+             System.out.println(emprestimos.get(i));[m
+         }[m
+     }[m
+[32m+[m[32m    // Fornece uma descricao do acervo para a interface.[m
+[32m+[m[32m    public String obterAcervoComoTexto() {[m
+[32m+[m[32m        if (livros.isEmpty()) {[m
+[32m+[m[32m            return "Nenhum livro cadastrado.";[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        String texto = "";[m
+[32m+[m[32m        for (int i = 0; i < livros.size(); i++) {[m
+[32m+[m[32m            texto = texto + livros.get(i) + "\n";[m
+[32m+[m[32m        }[m
+[32m+[m[32m        return texto;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m
+ }[m
+[1mdiff --git a/bibliotech/docs/.devcontainer/devcontainer.json b/bibliotech/docs/.devcontainer/devcontainer.json[m
+[1mdeleted file mode 100644[m
+[1mindex 535bce3..0000000[m
+[1m--- a/bibliotech/docs/.devcontainer/devcontainer.json[m
+[1m+++ /dev/null[m
+[36m@@ -1,10 +0,0 @@[m
+[31m-{[m
+[31m-  "name": "2026-PS - Java 21",[m
+[31m-  "image": "mcr.microsoft.com/devcontainers/java:21",[m
+[31m-  "customizations": {[m
+[31m-    "vscode": {[m
+[31m-      "extensions": ["vscjava.vscode-java-pack"],[m
+[31m-      "settings": { "editor.tabSize": 4, "files.eol": "\n" }[m
+[31m-    }[m
+[31m-  }[m
+[31m-}[m
+\ No newline at end of file[m
