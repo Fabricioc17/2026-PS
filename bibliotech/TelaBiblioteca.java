@@ -69,6 +69,8 @@ public class TelaBiblioteca extends JFrame {
         JButton botaoDevolver = criarBotao("Devolver", new Color(46, 125, 50), Color.WHITE);
         JButton botaoAtualizar = criarBotao("Atualizar acervo", new Color(220, 225, 222), COR_TEXTO);
         JButton botaoConsultar = criarBotao("Consultar livros (MariaDB)", COR_SECUNDARIA, Color.WHITE);
+        JButton botaoPerfil = criarBotao("Meu Perfil", new Color(27, 94, 32), Color.WHITE);
+        botaoPerfil.addActionListener(e -> new TelaPerfil("Ana Silva", "2026011", 2).setVisible(true));
 
         botaoEmprestar.addActionListener(e -> emprestar());
         botaoDevolver.addActionListener(e -> devolver());
@@ -79,6 +81,7 @@ public class TelaBiblioteca extends JFrame {
         botoes.add(botaoDevolver);
         botoes.add(botaoAtualizar);
         botoes.add(botaoConsultar);
+        botoes.add(botaoPerfil);
         painelPrincipal.add(botoes, BorderLayout.SOUTH);
 
         atualizarAcervo();
